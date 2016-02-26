@@ -1,0 +1,136 @@
+#!/bin/bash
+# Created by Eric Lagergren
+# https://gist.github.com/EricLagergren/ddea0f327d38f8c3a918
+#
+# For more info see https://golang.org/doc/install.html, the instructions there are all
+# that is needed to install Go.
+#
+# DO NOT RUN with sudo; Go should be installed under the user not root.  Using sudo will
+# cause problems.
+
+set -euo pipefail
+
+if [ -z "$GOPATH" ]; then
+	echo '$GOPATH must be set!'
+	exit 1
+fi
+
+if [ -z "$GOROOT_BOOTSTRAP" ]; then
+	echo '$GOROOT_BOOTSTRAP must be set'
+	echo "If installing Go < 1.5 (in which case bootstrapping is not"
+	echo 'needed, just set $GOROOT_BOOTSTRAP to an arbitrary value'
+	exit 1
+fi
+
+readonly possible="
+GOOS:GOARCH
+----:------
+:
+darwin:386
+darwin:amd64
+darwin:arm
+darwin:arm64
+dragonfly:amd64
+freebsd:386
+freebsd:amd64
+freebsd:arm
+linux:386
+linux:amd64
+linux:arm
+linux:arm64
+linux:ppc64
+linux:ppc64le
+linux:mips64
+linux:mips64le
+netbsd:386
+netbsd:amd64
+netbsd:arm
+openbsd:386
+openbsd:amd64
+openbsd:arm
+plan9:386
+plan9:amd64
+solaris:amd64
+windows:386
+windows:amd64"
+
+goos=""
+goarch=""
+vers=()
+
+while [[ $# > 0 ]]
+do
+	case "$1" in
+		-o|--goos)
+			goos="$2"
+			shift
+			;;
+
+		-a|--goarch)
+			goarch="$2"
+			shift
+			;;
+
+		-h|--help)
+			echo "Usage: ./install_go.sh [OPTIONS] versions..."
+			echo ""
+			echo "  Versions must be valid Go version numbers. "
+			echo "  (E.g., 1.5.3, 1.6, 1.4.2, etc.)"
+			echo ""
+			echo "  -o, --goos        specify the operating system to download"
+			echo "  -a, --goarch      specify the architecture to download"
+			echo "  -p, --possible    print possible GOOS/GOARCH combinations"
+			echo "  -v, --version     print version"
+			echo "  -h, --help        print help message"
+			echo ""
+
+			exit 0
+			;;
+		-v|--version)
+			echo "install_go version 0.1"
+			echo "By eric@ericlagergren.com"
+			echo ""
+			echo "This software is Public Domain."
+			echo "The person who associated a work with this deed has dedicated"
+			echo "the work to the public domain by waiving all of his or her"
+			echo "rights to the work worldwide under copyright law, including"
+			echo "all related and neighboring rights, to the extent allowed by law."
+			echo ""
+			echo "You can copy, modify, distribute and perform the work, even for"
+			echo "commercial purposes, all without asking permission."
+			echo ""
+			echo "For more information: https://creativecommons.org/publicdomain/zero/1.0/"
+
+			exit 0
+			;;
+
+		-p|--possible)
+			echo "$possible" | column -t -s ":"
+
+			exit 0
+			;;
+		*)
+			vers+=("$1")
+			;;
+	esac
+shift
+done
+
+for ver in "${vers[@]}"
+do
+	readonly path="/usr/local/go/$ver"
+	readonly url="https://storage.googleapis.com/golang/go$ver.$goos-$goarch.tar.gz"
+
+	# Most platforms I know require root to modify /usr/
+	# Whateva.
+	[ -d "$path" ] && echo "$path exists!" && exit 1 || sudo mkdir -p "$path"
+
+	readonly me=$(whoami)
+	sudo chown -R "$me:$me" $path
+
+	# Download and extract to /usr/local/go/$ver
+	curl "$url" | tar xz --strip-components=1 -C "$path"
+
+	cd "$path/src" && ./make.bash
+	sudo mv $GOPATH/bin/go "/usr/local/bin/go$ver"
+done
