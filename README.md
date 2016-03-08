@@ -26,7 +26,7 @@ Usage: ./install_go.sh [OPTIONS] versions...
 
 ```
 
-### License notification for `install_go`
+### License
 
 ```
 version 0.1
