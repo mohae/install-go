@@ -7,7 +7,24 @@ These scripts should be run as the user for which you want Go.  __Do not run as 
 Installs the current release of Go to `/usr/local/go`.  The `$GOPATH` is set to `~/go` and the directory is created.  `$GOPATH`, `$GOPATH/bin`, and  `/usr/local/go/bin` are added to the `~/.bashrc` file.
 
 ## install_go
-This script is a copy of [Eric Lagergren's](https://github.com/EricLagergren) [InstallGo](https://gist.github.com/EricLagergren/ddea0f327d38f8c3a918) script.  It allows for more control over the Go install process incuding specifying the `$GOPATH`; installing a specific version of Go; specifying the Go OS and arch; and compiling Go from source.
+This script is a copy of [Eric Lagergren's](https://github.com/EricLagergren) [InstallGo](https://gist.github.com/EricLagergren/ddea0f327d38f8c3a918) script.  It allows for the specification of the Go version to install along with the OS and arch.
+
+### Help output
+This is the help output of the script, which provides all of the information needed to use it:
+
+```
+Usage: ./install_go.sh [OPTIONS] versions...
+
+  Versions must be valid Go version numbers.
+  (E.g., 1.5.3, 1.6, 1.4.2, etc.)
+
+  -o, --goos        specify the operating system to download
+  -a, --goarch      specify the architecture to download
+  -p, --possible    print possible GOOS/GOARCH combinations
+  -v, --version     print version
+  -h, --help        print help message
+
+```
 
 ### License notification for `install_go`
 
