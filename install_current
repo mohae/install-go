@@ -1,18 +1,43 @@
 #!/bin/bash
-# For more info see https://golang.org/doc/install.html, the instructions there are all
-# that is needed to install Go.
+# For more info see https://golang.org/doc/install.html, the instructions
+# there are all that is needed to install Go.
 #
-# DO NOT RUN with SUDO; Go should be installed under the user not root.  Using sudo will
-# cause problems.  This script will install Go to /usr/local/go and create your workspace
-# in your home directory: $HOME/go.
+# DO NOT RUN with SUDO; Go should be installed under the user not root.
+# Using sudo will cause problems.
 #
-# The workspace is where all of the Go code will exist. Place your code in a subdirectory
-# of $HOME/go/src. If you want your Go code (workspace) in a different location, change
-# both the mkdir line and GOPATH to the location of your user's workspace.
+# This script will install Go to /usr/local/go.  The default location for
+# your Go workspace ($GOPATH) is $HOME/go.  A custom location can be
+# specified using the -w or --workspace flag.
 #
-# Please see https://golang.org/doc/code.html for more information about code organization.
-mkdir ~/go
-echo export 'GOPATH=$HOME/go' >> ~/.bashrc
+# Please see https://golang.org/doc/code.html for more information about
+# code organization.
+
+workspace="$HOME/go"
+
+while [[ $# > 0 ]]
+do
+	case "$1" in
+		-h|--help)
+			echo ""
+			echo "Usage: ./install_current [OPTIONS]"
+			echo ""
+			echo "  The default workspace location is $HOME/go"
+			echo ""
+			echo "  -h, --help       print help message"
+			echo "  -w, --workspace  specify a custom workspace ($GOPATH)"
+			echo ""
+
+			exit 0
+			;;
+		-w|--workspace)
+			workspace="$2"
+			;;
+	esac
+shift
+done
+
+mkdir -p $workspace
+echo export 'GOPATH=$workspace' >> ~/.bashrc
 echo export 'PATH=$PATH:/usr/local/go/bin:$GOPATH/bin' >> ~/.bashrc
 source ~/.bashrc
 # download and extract Go to /usr/local/go/
