@@ -1,19 +1,34 @@
 # install-go
-Shell scripts for compiling Go from source or installing and updating Go.  These are consistent with the instructions on https://golang.org/doc/install
+Scripts to install and update Go for 64bit Linux and Windows systems.
+
+## Shell
+Shell scripts for installing and updating Go.  These are consistent with the instructions on https://golang.org/doc/install
 
 These scripts should be run as the user for which you want Go.  __Do not run as `sudo`__.  This breaks things.
 
-## install_current
-Installs the current release of Go to `/usr/local/go`.  The `$GOPATH` is set to `~/go` and the directory is created.  `$GOPATH`, `$GOPATH/bin`, and  `/usr/local/go/bin` are added to the `~/.bashrc` file.
+### install_current
+Installs the current release of Go to `/usr/local/go`.  By default, the `$GOPATH` is set to `~/go` and the directory is created.  This can be overridden by using either the `-w` or `--workspace` flag. `$GOPATH`, `$GOPATH/bin`, and  `/usr/local/go/bin` are added to the `~/.bashrc` file.
 
-## install_go
-This script is a copy of [Eric Lagergren's](https://github.com/EricLagergren) [InstallGo](https://gist.github.com/EricLagergren/ddea0f327d38f8c3a918) script.  It allows for the specification of the Go version to install along with the OS and arch.
-
-### Help output
+#### Help output
 This is the help output of the script, which provides all of the information needed to use it:
 
 ```
-Usage: ./install_go.sh [OPTIONS] versions...
+Usage: ./install_current [OPTIONS]
+
+  The default workspace location is $HOME/go
+
+  -h, --help       print help message
+  -w, --workspace  specify a custom workspace ($GOPATH)
+```
+
+### install_go
+This script is a copy of [Eric Lagergren's](https://github.com/EricLagergren) [InstallGo](https://gist.github.com/EricLagergren/ddea0f327d38f8c3a918) script.  It allows for the specification of the Go version to install along with the OS and arch.
+
+#### Help output
+This is the help output of the script, which provides all of the information needed to use it:
+
+```
+Usage: ./install_go [OPTIONS] versions...
 
   Versions must be valid Go version numbers.
   (E.g., 1.5.3, 1.6, 1.4.2, etc.)
@@ -25,8 +40,26 @@ Usage: ./install_go.sh [OPTIONS] versions...
   -h, --help        print help message
 
 ```
+### upgrade_go
+This script upgrades the current Go installation to the current release.  It assumes that the Go is installation directory is `/usr/local/go`.
 
-### License
+The contents of `/usr/local/go`, `$GOPATH/bin`, and `$GOPATH/pkg` are removed.  The current release of Go is downloaded and extracted to `/usr/local/`.
+
+## Powershell
+Powershell scripts for installing the current release and updating Go to the current release.
+
+### install_current.ps1
+Installs the current Go release using the `msi` installer.  Manual intervention is necessary to complete the installation.  The `$GOPATH` is set to `$HOME/Documents/code/go` and that directory is created.
+
+### upgrade_go.ps1
+This script upgrades the current Go installation to the current release using the current release's `zip` file.
+
+The contents of `$GOPATH\bin`, `$GOPATH\pkg`, `$GOROOT` are removed prior to upgrading Go.
+
+## License
+Everything except `install_go` is MIT Licensed.  See LICENSE file for more information.
+
+`install_go` license:
 
 ```
 version 0.1
@@ -43,10 +76,3 @@ commercial purposes, all without asking permission.
 
 For more information: https://creativecommons.org/publicdomain/zero/1.0/
 ```
-
-## upgrade_go
-Upgrades the currently installed Go to the current version of Go.  All files in `/usr/local/go/`, `$GOPATH/bin/` , and `$GOPATH/pkg/` are removed prior to downloading and installing the current Go.
-
-This script assumes that Go is installed in `/usr/local/go`.
-
-

@@ -1,9 +1,9 @@
 ﻿# Install the current Go release
+$url = 'https://storage.googleapis.com/golang/go1.6.2.windows-amd64.msi'
 
 # Setup the vars
 $workDir = "Documents\code\go"
 $workspace = Join-Path $Home $workDir
-$url = 'https://storage.googleapis.com/golang/go1.6.2.windows-amd64.msi'
 $output = Join-Path $Home "Downloads\go.msi"
 
 # Setup the workspace
