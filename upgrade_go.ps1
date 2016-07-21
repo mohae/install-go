@@ -1,10 +1,11 @@
 ﻿# Url & destination
-$url = 'https://storage.googleapis.com/golang/go1.6.2.windows-amd64.zip'
+$url = 'https://storage.googleapis.com/golang/go1.6.3.windows-amd64.zip'
 $output = Join-Path $Home "Downloads\go.zip"
 
 #Upgrade to current release of Go
 $bin = Join-Path $env:GOPATH bin\*
 $pkg = Join-Path $env:GOPATH pkg\*
+
 # Remove existing artifacts
 if (Test-Path $bin) {
     Remove-Item $bin -recurse
