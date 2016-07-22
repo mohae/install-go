@@ -36,10 +36,10 @@ do
 shift
 done
 
-mkdir -p $workspace
-echo export 'GOPATH=$workspace' >> ~/.bashrc
-echo export 'PATH=$PATH:/usr/local/go/bin:$GOPATH/bin' >> ~/.bashrc
-source ~/.bashrc
+mkdir -p "$workspace"
+echo export "GOPATH=$workspace" >> "$HOME/.bashrc"
+echo export "PATH=$PATH:/usr/local/go/bin:$GOPATH/bin" >> "$HOME/.bashrc"
+source "$HOME/.bashrc"
 
 # download and extract Go to /usr/local/go/
 # change the tarball for different version/arch
