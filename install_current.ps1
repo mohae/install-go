@@ -1,5 +1,5 @@
 ﻿# Install the current Go release
-$url = 'https://storage.googleapis.com/golang/go1.7.windows-amd64.msi'
+$url = 'https://storage.googleapis.com/golang/go1.7.1.windows-amd64.msi'
 
 # Setup the vars
 $workDir = "Documents\code\go"

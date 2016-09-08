@@ -1,6 +1,6 @@
 ﻿# Url & destination
-$url = 'https://storage.googleapis.com/golang/go1.7.windows-amd64.zip'
-$output = Join-Path $Home "Downloads\go1.7.zip"
+$url = 'https://storage.googleapis.com/golang/go1.7.1.windows-amd64.zip'
+$output = Join-Path $Home "Downloads\go1.7.1.zip"
 
 #Upgrade to current release of Go
 # $pkg = Join-Path $env:GOPATH pkg\*
