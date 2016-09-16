@@ -5,7 +5,7 @@ param([string]$w='')
 $version = 'go1.7.1.windows-amd64.msi'
 
 # set defaults
-$workDir = 'Documents\code\go3'
+$workDir = 'Documents\code\go'
 $url = 'https://storage.googleapis.com/golang/' + $version
 $dest = Join-Path $Home "Downloads"
 $dest = Join-Path $dest $version
@@ -23,10 +23,12 @@ New-Item -path $workspace -type directory
 # Create GOPATH and set PATH to use $GOPATH\bin
 $workspaceBin = Join-Path $workspace "bin"
 $workspaceBin = ';' + $workspaceBin
+
+# set the $GOPATH
 [Environment]::SetEnvironmentVariable( "GOPATH", $workspace, [System.EnvironmentVariableTarget]::User )
-# Docs seem to say that: $env:Path + $workspaceBin should be used; but that results in repeating
-# Path info; this seems to get the desired result.
-[Environment]::SetEnvironmentVariable( "Path", $workspaceBin, [System.EnvironmentVariableTarget]::User )
+
+# see the $GOBIN
+[Environment]::SetEnvironmentVariable( "GOBIN", $workspaceBin, [System.EnvironmentVariableTarget]::User )
 
 Write-Output "downloading $url"
 # Create client, set its info, and download
