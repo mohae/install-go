@@ -17,8 +17,10 @@ if ($w -eq "") {
     $workspace = $w
 }
 
-# Setup the Go workspace
-New-Item -path $workspace -type directory
+# Setup the Go workspace; if it doesn't exist.
+If (!(Test-Path $workspace)) {
+    New-Item -path $workspace -type directory
+}
 
 # Create GOPATH and set PATH to use $GOPATH\bin
 $workspaceBin = Join-Path $workspace "bin"
