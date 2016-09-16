@@ -43,18 +43,18 @@ Usage: ./install_go [OPTIONS] versions...
 ### upgrade_go
 This script upgrades the current Go installation to the current release.  It assumes that the Go is installation directory is `/usr/local/go`.
 
-The contents of `/usr/local/go`, `$GOPATH/bin`, and `$GOPATH/pkg` are removed.  The current release of Go is downloaded and extracted to `/usr/local/`.
+The contents of `/usr/local/go` are removed.  Then the current release of Go is downloaded and extracted to `/usr/local/`.
 
 ## Powershell
 Powershell scripts for installing the current release and updating Go to the current release.
 
 ### install_current.ps1
-Installs the current Go release using the `msi` installer.  Manual intervention is necessary to complete the installation.  The `$GOPATH` is set to `$HOME/Documents/code/go` and that directory is created.
+Installs the current Go release using the `msi` installer.  Manual intervention is necessary to complete the installation.  The default `$GOPATH` is `$HOME/Documents/code/go`.  A custom `$GOPATH` location can be set by passing the `-w` flag along with the path to use.  The `$GOPATH` directory will be created if it doesn't already exist.
 
 ### upgrade_go.ps1
 This script upgrades the current Go installation to the current release using the current release's `zip` file.
 
-The contents of `$GOPATH\bin`, `$GOPATH\pkg`, `$GOROOT` are removed prior to upgrading Go.
+The contents of `$GOPATH\bin` are removed prior to upgrading Go.
 
 ## License
 Everything except `install_go` is MIT Licensed.  See LICENSE file for more information.
