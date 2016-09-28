@@ -8,7 +8,7 @@
 # DO NOT RUN with sudo; Go should be installed under the user not root.  Using sudo will
 # cause problems.
 
-set -euo pipefail
+set -eo pipefail
 
 if [ -z "$GOPATH" ]; then
 	echo '$GOPATH must be set!'
@@ -19,6 +19,8 @@ if [ -z "$GOROOT_BOOTSTRAP" ]; then
 	echo '$GOROOT_BOOTSTRAP must be set'
 	echo "If installing Go < 1.5 (in which case bootstrapping is not"
 	echo 'needed, just set $GOROOT_BOOTSTRAP to an arbitrary value'
+        echo '$GOROOT_BOOTSTRAP must point to the working Go libraries,'
+        echo 'e.g., $GOROOT'
 	exit 1
 fi
 
@@ -54,8 +56,8 @@ solaris:amd64
 windows:386
 windows:amd64"
 
-goos=""
-goarch=""
+goos="$GOOS"
+goarch="$GOARCH"
 vers=()
 
 while [[ $# > 0 ]]
@@ -77,6 +79,8 @@ do
 			echo "  Versions must be valid Go version numbers. "
 			echo "  (E.g., 1.5.3, 1.6, 1.4.2, etc.)"
 			echo ""
+                        echo "Options:"
+                        echo ""
 			echo "  -o, --goos        specify the operating system to download"
 			echo "  -a, --goarch      specify the architecture to download"
 			echo "  -p, --possible    print possible GOOS/GOARCH combinations"
@@ -87,7 +91,7 @@ do
 			exit 0
 			;;
 		-v|--version)
-			echo "install_go version 0.1"
+			echo "install_go version 0.2"
 			echo "By eric@ericlagergren.com"
 			echo ""
 			echo "This software is Public Domain."
@@ -116,6 +120,10 @@ do
 shift
 done
 
+function errmsg {
+    echo "$1 exists! Have you already installed this version before?"
+}
+
 for ver in "${vers[@]}"
 do
 	readonly path="/usr/local/go/$ver"
@@ -123,14 +131,16 @@ do
 
 	# Most platforms I know require root to modify /usr/
 	# Whateva.
-	[ -d "$path" ] && echo "$path exists!" && exit 1 || sudo mkdir -p "$path"
+	[ -d "${path}" ] && errmsg "${path}" && exit 1 || sudo mkdir -p "${path}"
 
 	readonly me=$(whoami)
 	sudo chown -R "$me:$me" $path
 
 	# Download and extract to /usr/local/go/$ver
-	curl "$url" | tar xz --strip-components=1 -C "$path"
+	curl "${url}" | tar xz --strip-components=1 -C "$path"
 
-	cd "$path/src" && ./make.bash
-	sudo mv $GOPATH/bin/go "/usr/local/bin/go$ver"
+        GOBIN="${path}/bin"
+
+	cd "${path}/src" && ./make.bash
+	sudo mv ${path}/bin/go "/usr/local/bin/go$ver"
 done
