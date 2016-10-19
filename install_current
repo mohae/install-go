@@ -43,4 +43,4 @@ source "$HOME/.bashrc"
 
 # download and extract Go to /usr/local/go/
 # change the tarball for different version/arch
-wget -qO- https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz | sudo tar xz -C /usr/local
+wget -qO- https://storage.googleapis.com/golang/go1.7.3.linux-amd64.tar.gz | sudo tar xz -C /usr/local
