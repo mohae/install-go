@@ -2,7 +2,7 @@
 param([string]$w='')
 
 # version
-$version = 'go1.7.3.windows-amd64.msi'
+$version = 'go1.7.4.windows-amd64.msi'
 
 # set defaults
 $workDir = 'Documents\code\go'
