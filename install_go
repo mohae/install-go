@@ -33,12 +33,22 @@ do
 	case "$1" in
 		-h|--help)
 			echo ""
-			echo "Usage: ./install_current [OPTIONS]"
+			echo "Usage: ./install_go [OPTIONS]"
+			echo ""
+			echo "  Do not use if you already have Go installed!"
 			echo ""
 			echo "  The default workspace location is $HOME/go"
+			echo "  The default os is $goos"
+			echo "  The default arch is $goarch"
+			echo "  The default version is $version"
 			echo ""
-			echo "  -h, --help       print help message"
-			echo "  -w, --workspace  specify a custom workspace ($GOPATH)"
+			echo "  OPTIONS:"
+			echo "  -h, --help               print help message"
+			echo "  -w, --workspace          specify a custom workspace (\$GOPATH)"
+			echo "  -a, --arch, --goarch     specify the arch (\$GOARCH)"
+			echo "  -o, --os, --goos         specify the os (\$GOOS)"
+			echo "  -v, --version            specify the version"
+			echo "  -s, --supported          list the supported os:arch combinations"
 			echo ""
 
 			exit 0
@@ -59,6 +69,10 @@ do
 			version="$2"
 			shift
 			;;
+		-s|--supported)
+			listsupported = true
+			shift
+			;;
 	esac
 shift
 done
@@ -75,9 +89,13 @@ do
 	fi
 done
 
-# if it was an invalid combination; return a message letting them know
+# if it was an invalid combination them know
 if ! $isvalid; then
 	echo "invalid GOOS GOARCH combination: $goos $goarch"
+fi
+
+# if it was invalid or a listing was requested list supported combinations and exit
+if ! $isvalid || $listsupported; then
 	echo "supported GOOS GOARCH combinations:"
 	for v in "${valid[@]}"
 	do

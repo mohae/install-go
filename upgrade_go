@@ -55,6 +55,10 @@ do
 			version="$2"
 			shift
 			;;
+		-s|--supported)
+			listsupported = true
+			shift
+			;;
 	esac
 shift
 done
@@ -71,9 +75,13 @@ do
 	fi
 done
 
-# if it was an invalid combination; return a message letting them know
+# if it was an invalid combination them know
 if ! $isvalid; then
 	echo "invalid GOOS GOARCH combination: $goos $goarch"
+fi
+
+# if it was invalid or a listing was requested list supported combinations and exit
+if ! $isvalid || $listsupported; then
 	echo "supported GOOS GOARCH combinations:"
 	for v in "${valid[@]}"
 	do
@@ -91,7 +99,7 @@ fi
 # download and extract Go to /usr/local/go/
 wget_output=$(wget -O /tmp/go.$version.tar.gz https://storage.googleapis.com/golang/go$version.$goos-$goarch.tar.gz)
 if [ $? -ne 0 ]; then
-	echo "unable to install go $version"
+	echo "unable to upgrade go to $version"
 	exit 1
 fi
 
