@@ -24,6 +24,7 @@ do
 			echo "Usage: ./upgrade_go [OPTIONS]"
 			echo ""
 			echo "  Use when Go is already installed and you wish to install a different version"
+			echo ""
 			echo "  The default workspace location is $HOME/go"
 			echo "  The default os is $goos"
 			echo "  The default arch is $goarch"
