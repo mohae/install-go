@@ -1,36 +1,39 @@
 ﻿# Install the current Go release
-param([string]$w='')
+param(
+	[string]$w=''
+	[string]$v='1.7.5'
+)
 
-# version
-$version = 'go1.7.4.windows-amd64.msi'
+# installer file
+$file = 'go' + $v + '.windows-amd64.msi'
 
 # set defaults
 $workDir = 'Documents\code\go'
-$url = 'https://storage.googleapis.com/golang/' + $version
+$url = 'https://storage.googleapis.com/golang/' + $file
 $dest = Join-Path $Home "Downloads"
-$dest = Join-Path $dest $version
+$dest = Join-Path $dest $file
 
 # if $w wasn't passed; use the default
 if ($w -eq "") {
-    $workspace = Join-Path $Home $workDir
+    $gopath = Join-Path $Home $workDir
 } else {
-    $workspace = $w
+    $gopath = $w
 }
 
 # Setup the Go workspace; if it doesn't exist.
-If (!(Test-Path $workspace)) {
-    New-Item -path $workspace -type directory
+If (!(Test-Path $gopath)) {
+    New-Item -path $gopath -type directory
 }
 
 # Create GOPATH and set PATH to use $GOPATH\bin
-$workspaceBin = Join-Path $workspace "bin"
-$workspaceBin = ';' + $workspaceBin
+$gopathbin = Join-Path $gopath "bin"
+#$gopathbin = ';' + $gopathbin
 
 # set the $GOPATH
-[Environment]::SetEnvironmentVariable( "GOPATH", $workspace, [System.EnvironmentVariableTarget]::User )
+[Environment]::SetEnvironmentVariable( "GOPATH", $gopath, [System.EnvironmentVariableTarget]::User )
 
 # see the $GOBIN
-[Environment]::SetEnvironmentVariable( "GOBIN", $workspaceBin, [System.EnvironmentVariableTarget]::User )
+[Environment]::SetEnvironmentVariable( "GOBIN", $gopathbin, [System.EnvironmentVariableTarget]::User )
 
 Write-Output "downloading $url"
 # Create client, set its info, and download
@@ -40,7 +43,7 @@ $wc.Headers.Add("X-FORMS_BASED_AUTH_ACCEPTED", "f")
 $wc.DownloadFile($url, $dest)
 
 Write-Output "$url downloaded as $dest"
-Write-Output "installing $version..."
+Write-Output "installing $v..."
 # Run the msi
 Start-Process $dest
 

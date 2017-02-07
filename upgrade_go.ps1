@@ -1,15 +1,11 @@
-﻿# Url & destination
-$url = 'https://storage.googleapis.com/golang/go1.7.4.windows-amd64.zip'
-$output = Join-Path $Home "Downloads\go1.7.4.zip"
+# version
+$v = '1.7.5'
 
-#Upgrade to current release of Go
-# $pkg = Join-Path $env:GOPATH pkg\*
+﻿# Url & destination information
+$url = 'https://storage.googleapis.com/golang/go' + $v + '.windows-amd64.zip'
+$filename = 'go' + $v + ".zip"
+$output = Join-Path $Home 'Downloads\' + $filename
 
-# Remove existing artifacts
-# may not be necessary: commenting out for now.
-#if (Test-Path $pkg) {
-#    Remove-Item $pkg -recurse
-#}
 $goroot = [environment]::GetEnvironmentVariable("GOROOT", "Machine")
 $gorootAll = $goroot + "*"
 Remove-Item $gorootAll -recurse

@@ -1,6 +1,6 @@
 #!/bin/bash
 # upgrade to current version
-version="1.7.4"
+version="1.7.5"
 goarch="amd64"
 goos="linux"
 
