@@ -6,7 +6,7 @@ Bash is used for the shell scripts. Powershell is used for Windows.
 ## Shell
 Shell scripts for installing and updating Go.  These are consistent with the instructions on https://golang.org/doc/install
 
-These scripts should be run as the user for which you want Go.  __Do not run as `sudo`__.  This breaks things.
+These scripts should be run as the user for which you want Go.  __Do not run as root or with `sudo`__.  This breaks things.
 
 ### install_go
 Installs Go to `/usr/local/go`.  By default, the `$GOPATH` is set to `~/go` and the directory is created.  This can be overridden by using either the `-w` or `--workspace` flag. `$GOPATH`, `$GOPATH/bin`, and  `/usr/local/go/bin` are added to the `~/.bashrc` file.
@@ -63,9 +63,9 @@ Usage: ./install_go_all [OPTIONS] versions...
 ```
 
 ## Powershell
-Powershell scripts for installing the current release and updating Go to the current release.
+Powershell scripts for installing the current release and updating Go to the current release. Since these scripts are not signed, you may need to run the `Set-ExecutionPolicy` Cmdlet first.
 
-### install_current.ps1
+### install_go.ps1
 Installs the current Go release using the `msi` installer.  Manual intervention is necessary to complete the installation.  The default `$GOPATH` is `$HOME/Documents/code/go`.  A custom `$GOPATH` location can be set by passing the `-w` flag along with the path to use.  The `$GOPATH` directory will be created if it doesn't already exist.
 
 ### upgrade_go.ps1
