@@ -1,5 +1,5 @@
 # version
-$v = '1.7.5'
+$v = '1.8'
 
 ﻿# Url & destination information
 $url = 'https://storage.googleapis.com/golang/go' + $v + '.windows-amd64.zip'
