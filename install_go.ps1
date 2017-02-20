@@ -1,6 +1,6 @@
 ﻿# Install the current Go release
 param(
-	[string]$w=''
+	[string]$w='',
 	[string]$v='1.8'
 )
 
