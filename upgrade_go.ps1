@@ -8,6 +8,8 @@ $url = 'https://storage.googleapis.com/golang/go' + $v + '.windows-amd64.zip'
 $filename = 'go' + $v + ".zip"
 $output = [io.path]::combine($Home, 'Downloads', $filename)
 
+# Remove old go installation
+Write-Output "removing existing the currently installed Go from $goroot"
 $goroot = [environment]::GetEnvironmentVariable("GOROOT", "Machine")
 $gorootAll = $goroot + "*"
 Remove-Item $gorootAll -recurse
