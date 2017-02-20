@@ -8,7 +8,7 @@ param(
 $file = 'go' + $v + '.windows-amd64.msi'
 
 # set defaults
-$workDir = 'Documents\code\go'
+$workDir = 'Documents\go'
 $url = 'https://storage.googleapis.com/golang/' + $file
 $dest = Join-Path $Home "Downloads"
 $dest = Join-Path $dest $file
