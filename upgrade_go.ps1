@@ -9,9 +9,9 @@ $filename = 'go' + $v + ".zip"
 $output = [io.path]::combine($Home, 'Downloads', $filename)
 
 # Remove old go installation
-Write-Output "removing the currently installed Go from $goroot"
 $goroot = [environment]::GetEnvironmentVariable("GOROOT", "Machine")
 $gorootAll = $goroot + "*"
+Write-Output "removing the currently installed Go from $goroot"
 Remove-Item $gorootAll -recurse
 
 # Create client, set its info, and download
