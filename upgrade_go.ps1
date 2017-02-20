@@ -4,7 +4,7 @@ $v = '1.8'
 ﻿# Url & destination information
 $url = 'https://storage.googleapis.com/golang/go' + $v + '.windows-amd64.zip'
 $filename = 'go' + $v + ".zip"
-$output = Join-Path $Home 'Downloads\' + $filename
+$output = [io.path]::combine($Home, 'Downloads', $filename)
 
 $goroot = [environment]::GetEnvironmentVariable("GOROOT", "Machine")
 $gorootAll = $goroot + "*"
