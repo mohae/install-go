@@ -3,7 +3,7 @@ param(
 	[string]$v='1.8'
 )
 
-﻿# Url & destination information
+# Url & destination information
 $url = 'https://storage.googleapis.com/golang/go' + $v + '.windows-amd64.zip'
 $filename = 'go' + $v + ".zip"
 $output = [io.path]::combine($Home, 'Downloads', $filename)
