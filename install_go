@@ -11,7 +11,7 @@
 #
 # Please see https://golang.org/doc/code.html for more information about
 # code organization.
-version="1.8"
+version="1.8.3"
 goarch="amd64"
 goos="linux"
 workspace="$HOME/go"
