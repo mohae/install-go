@@ -1,7 +1,7 @@
 ﻿# Install the current Go release
 param(
 	[string]$w='',
-	[string]$v='1.8.3'
+	[string]$v='1.9'
 )
 
 # installer file
