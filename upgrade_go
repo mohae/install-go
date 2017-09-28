@@ -111,6 +111,11 @@ sudo rm -rf /usr/local/go
 
 echo "extracting /tmp/go.$version.tar.gz to /usr/local" 
 
-sudo tar xzf /tmp/go.$version.tar.gz -C /usr/local
+tar_output=$(sudo tar xzf /tmp/go.$version.tar.gz -C /usr/local)
+if [ $? -ne 0 ]; then
+	echo "unable to install go $version"
+	echo $tar_output
+	exit 1
+fi
 
-echo "complete: go upgrade to $version"
+echo "complete: go upgraded to $version"
