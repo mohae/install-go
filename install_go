@@ -115,12 +115,14 @@ fi
 wget_output=$(wget -O /tmp/go.$version.tar.gz https://storage.googleapis.com/golang/go$version.$goos-$goarch.tar.gz)
 if [ $? -ne 0 ]; then
 	echo "unable to install go $version"
+	echo $wget_output
 	exit 1
 fi
 
 tar_output=$(sudo tar xzf /tmp/go$.$version.tar.gz /usr/local)
 if [ $? -ne 0 ]; then
 	echo "unable to install go $version"
+	echo $tar_output
 	exit 1
 fi
 
@@ -129,3 +131,6 @@ mkdir -p "$workspace"
 echo export "GOPATH=$workspace" >> "$HOME/.bashrc"
 echo export "PATH=$PATH:/usr/local/go/bin:$GOPATH/bin" >> "$HOME/.bashrc"
 source "$HOME/.bashrc"
+
+echo "complete: go $version installed"
+echo "  GOPATH=$workspace"
