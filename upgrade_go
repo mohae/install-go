@@ -108,7 +108,7 @@ fi
 # remove the old Go
 sudo rm -rf /usr/local/go
 
-sudo tar xzf /tmp/go$.$version.tar.gz /usr/local
+sudo tar xzf /tmp/go.$version.tar.gz /usr/local
 
 # remove artifacts from prior version
 # May not be necessary: commentint out for now
