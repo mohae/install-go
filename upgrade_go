@@ -114,7 +114,3 @@ echo "extracting /tmp/go.$version.tar.gz to /usr/local"
 sudo tar xzf /tmp/go.$version.tar.gz -C /usr/local
 
 echo "complete: go upgrade to $version"
-
-# remove artifacts from prior version
-# May not be necessary: commentint out for now
-rm -rf $GOPATH/pkg/*
