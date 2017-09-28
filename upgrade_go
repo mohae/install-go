@@ -101,7 +101,8 @@ fi
 # download and extract Go to /usr/local/go/
 wget_output=$(wget -O /tmp/go.$version.tar.gz https://storage.googleapis.com/golang/go$version.$goos-$goarch.tar.gz)
 if [ $? -ne 0 ]; then
-	echo "unable to upgrade go to $version"
+	echo "unable to upgrade go to $version:"
+	echo $wget_output
 	exit 1
 fi
 
