@@ -119,7 +119,7 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
-tar_output=$(sudo tar xzf /tmp/go$.$version.tar.gz /usr/local)
+tar_output=$(sudo tar xzf /tmp/go.$version.tar.gz -C /usr/local)
 if [ $? -ne 0 ]; then
 	echo "unable to install go $version"
 	echo $tar_output
