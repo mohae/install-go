@@ -15,6 +15,7 @@ version="1.9"
 goarch="amd64"
 goos="linux"
 workspace="$HOME/go"
+listsupported=false
 
 valid=(
 	"darwin:386"

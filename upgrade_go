@@ -3,6 +3,7 @@
 version="1.9"
 goarch="amd64"
 goos="linux"
+listsupported="false"
 
 valid=(
 	"darwin:386"
